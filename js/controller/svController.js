@@ -19,24 +19,6 @@ function getDataFromInput(){
     password: _password,
     datepicker: _datepicker,
     luongCB: _luongCB,
-    tinhTongLuong:function(){
-        var tongLuong = 0;
-        if(this.chucvu === "Sếp")
-        {
-            tongLuong = this.chucvu * 3;
-            return tongLuong;
-        }
-        else if(this.chucvu === "Trưởng phòng")
-        {
-            tongLuong = this.chucvu * 2;
-            return tongLuong;
-        }
-        else if(this.chucvu === "Nhân viên")
-        {
-            tongLuong = this.chucvu;
-            return tongLuong;
-        }
-    },
     chucvu: _chucvu,
     giolam: _gioLam,
     }
@@ -59,7 +41,6 @@ function renderToTable(arrNV){
                     <td>${item.email}</td>
                     <td>${item.datepicker}</td>
                     <td>${item.chucvu}</td>
-                    <td>${item.tinhTongLuong()}</td>
                     <td>${item.giolam}</td>
                     <td>
                         <button onclick="xoaNhanVien('${item.tknv}')" class="px-1 btn-danger">Xóa</button>
