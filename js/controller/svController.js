@@ -54,4 +54,8 @@ function getDataFromJSON(nhanvienJSON){
         })
         return dsnv;
     }
+    else
+    {
+        return dsnv;
+    }
 }

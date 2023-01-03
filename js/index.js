@@ -1,6 +1,5 @@
-
-
 var nhanVien = [];
+var isValid = true;
 //lấy data từ local storage
 var nhanVienJSON = localStorage.getItem("NHANVIEN");
 nhanVien = getDataFromJSON(nhanVienJSON);
@@ -8,16 +7,16 @@ renderToTable(nhanVien);
 
 
 function themNhanVien() {
-    console.log('nhan vien = ',nhanVien);
     var nv = layThongTinTuForm();
-    console.log('nv = ',nv);
-    console.log('typeof nhanvien = ',typeof nhanVien);
-    nhanVien.push(nv);
-    console.log('nhan vien = ',nhanVien);
-    addDataToJSON(nhanVien);
-    var JSONcontent = localStorage.getItem("NHANVIEN");
-    nhanVien = getDataFromJSON(JSONcontent);
-    renderToTable(nhanVien);
+    isValid = kiemTraTrung(nv, nhanVien) && kiemTraDoDai(nv.tknv,'tbTKNV',4,6);
+    if(isValid)
+    {
+        nhanVien.push(nv);
+        addDataToJSON(nhanVien);
+        var JSONcontent = localStorage.getItem("NHANVIEN");
+        nhanVien = getDataFromJSON(JSONcontent);
+        renderToTable(nhanVien);
+    }
 }
 
 function xoaNhanVien(taikhoanNV){
@@ -34,4 +33,31 @@ function xoaNhanVien(taikhoanNV){
             renderToTable(nhanVien);
         }
     })
+}
+
+function capnhatNhanVien()
+{
+    var nv = layThongTinTuForm();
+    var check = -1;
+    for (var i=0 ; i<nhanVien.length ; i++)
+    {
+        if(nhanVien[i].tknv == nv.tknv)
+        {
+            nhanVien[i] = nv;
+            check = 1;
+            alert('Cập nhật thành công');
+            break;
+        }
+    }
+    if(check == -1)
+    {
+        alert('Nhân viên không tồn tại');
+    }
+    else
+    {
+    addDataToJSON(nhanVien);
+    var JSONcontent = localStorage.getItem("NHANVIEN");
+    nhanVien = getDataFromJSON(JSONcontent);
+    renderToTable(nhanVien);
+    }
 }
