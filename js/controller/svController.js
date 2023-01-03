@@ -1,4 +1,4 @@
-function getDataFromInput(){
+function layThongTinTuForm(){
 
     //Lấy thông tin nhân viên nhập từ web
     var _tknv = document.getElementById('tknv').value;
@@ -10,44 +10,29 @@ function getDataFromInput(){
     var _chucvu = document.getElementById('chucvu').value;
     var _gioLam = document.getElementById('gioLam').value*1;
 
-    //Tạo object nv
-    var nv =
-    {
-    tknv: _tknv,
-    name: _name,
-    email: _email,
-    password: _password,
-    datepicker: _datepicker,
-    luongCB: _luongCB,
-    chucvu: _chucvu,
-    giolam: _gioLam,
-    }
-
-    //Trả về object nv
+    //Tạo Object và gán những thông tin đã lấy ở trên vào Object nhanVien
+    var nv = new classNV(_tknv, _name, _email, _password, _datepicker, _luongCB, _chucvu, _gioLam);
     return nv;
-}
-
-function createDataTable(arr){
-    
-    
 }
 
 function renderToTable(arrNV){
     var itemTr = "";
-    arrNV.map(function(item){
-        var contentTr = `<tr>
+    arrNV.map(function (item)
+    {
+        contentTr = `<tr>
                     <td>${item.tknv}</td>
                     <td>${item.name}</td>
                     <td>${item.email}</td>
                     <td>${item.datepicker}</td>
                     <td>${item.chucvu}</td>
-                    <td>${item.giolam}</td>
+                    <td>${item.tongLuong()}</td>
+                    <td>${item.xepLoai()}</td>
                     <td>
-                        <button onclick="xoaNhanVien('${item.tknv}')" class="px-1 btn-danger">Xóa</button>
-                    </td>
-                    </tr>`;
-        itemTr += contentTr;
-    });
+					    <button onclick="xoaNhanVien(${item.tknv})" class="px-1 btn-danger">Xóa</button>
+				    </td>
+                    </tr>`
+        itemTr += contentTr 
+    })
     document.getElementById('tableDanhSach').innerHTML = itemTr;
 }
 
@@ -59,9 +44,14 @@ function addDataToJSON(arr){
 }
 
 function getDataFromJSON(nhanvienJSON){
+    var dsnv = [];
     if(nhanvienJSON!=null)
     {
-        var temp = JSON.parse(nhanvienJSON);
+        var arrtemp = JSON.parse(nhanvienJSON);
+        arrtemp.map(function(item){
+            var nv = new classNV(item.tknv, item.name, item.email, item.password, item.datepicker, item.luongCB, item.chucvu, item.giolam);
+            dsnv.push(nv);
+        })
+        return dsnv;
     }
-    return temp;
 }

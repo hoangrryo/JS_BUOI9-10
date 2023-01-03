@@ -1,3 +1,5 @@
+
+
 var nhanVien = [];
 //lấy data từ local storage
 var nhanVienJSON = localStorage.getItem("NHANVIEN");
@@ -6,8 +8,12 @@ renderToTable(nhanVien);
 
 
 function themNhanVien() {
-    var nv = getDataFromInput();
+    console.log('nhan vien = ',nhanVien);
+    var nv = layThongTinTuForm();
+    console.log('nv = ',nv);
+    console.log('typeof nhanvien = ',typeof nhanVien);
     nhanVien.push(nv);
+    console.log('nhan vien = ',nhanVien);
     addDataToJSON(nhanVien);
     var JSONcontent = localStorage.getItem("NHANVIEN");
     nhanVien = getDataFromJSON(JSONcontent);
@@ -16,44 +22,16 @@ function themNhanVien() {
 
 function xoaNhanVien(taikhoanNV){
     var viTri = -1;
-    nhanVien.map(function(item){
+    nhanVien.map(function(item)
+    {
         if(item.tknv == taikhoanNV)
         {
             viTri = nhanVien.indexOf(item);
+            nhanVien.splice(viTri,1);
+            addDataToJSON(nhanVien);
+            var JSONcontent = localStorage.getItem("NHANVIEN");
+            nhanVien = getDataFromJSON(JSONcontent);
+            renderToTable(nhanVien);
         }
     })
-    if (viTri!=-1)
-    {
-        nhanVien.splice(viTri,1);
-        addDataToJSON(nhanVien);
-        var JSONcontent = localStorage.getItem("NHANVIEN");
-        nhanVien = getDataFromJSON(JSONcontent);
-        renderToTable(nhanVien);
-    }
-}
-
-function capnhatNhanVien(){
-     var newNV = getDataFromInput();
-     var viTri = -1;
-     for (var i=0 ; i < nhanVien.length ; i++)
-     {
-        var item = nhanVien[i];
-        if (item.tknv == newNV.tknv)
-        {
-            viTri = i;
-            break;
-        }
-     }
-     if (viTri!=-1)
-     {
-        nhanVien[viTri] = newNV
-        addDataToJSON(nhanVien);
-        var JSONcontent = localStorage.getItem("NHANVIEN");
-        getDataFromJSON(JSONcontent);
-        renderToTable(nhanVien);
-     }
-     else
-     {
-        alert('Nhân viên này chưa có trong hệ thống');
-     }
 }
