@@ -59,3 +59,23 @@ function getDataFromJSON(nhanvienJSON){
         return dsnv;
     }
 }
+
+function timLoaiNhanVien()
+{
+    var newArr = [];
+    var loaiNhanVien = document.getElementById('searchName').value;
+    nhanVien.map(function(item){
+        var xepLoai = item.xepLoai();
+        var result = xepLoai.indexOf(loaiNhanVien);
+        if(result != -1)
+        {
+            newArr.push(item);
+        }
+        return newArr;
+    })
+    renderToTable(newArr);
+    if(loaiNhanVien=='')
+    {
+        renderToTable(nhanVien);
+    }
+}

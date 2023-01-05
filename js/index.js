@@ -8,7 +8,7 @@ renderToTable(nhanVien);
 
 function themNhanVien() {
     var nv = layThongTinTuForm();
-    isValid = kiemTraTrung(nv, nhanVien) && kiemTraDoDai(nv.tknv,'tbTKNV',4,6);
+    isValid = validateAll(nv, nhanVien);
     if(isValid)
     {
         nhanVien.push(nv);
@@ -16,6 +16,7 @@ function themNhanVien() {
         var JSONcontent = localStorage.getItem("NHANVIEN");
         nhanVien = getDataFromJSON(JSONcontent);
         renderToTable(nhanVien);
+        alert('thêm thành công');
     }
 }
 
@@ -37,15 +38,74 @@ function xoaNhanVien(taikhoanNV){
 
 function capnhatNhanVien()
 {
+    var isValid = true;
     var nv = layThongTinTuForm();
     var check = -1;
     for (var i=0 ; i<nhanVien.length ; i++)
     {
         if(nhanVien[i].tknv == nv.tknv)
         {
-            nhanVien[i] = nv;
+            if(nv.name!=null)
+            {
+                isValid = kiemTraChu(nv.name);
+                if(isValid)
+                {
+                    nhanVien[i].name = nv.name;
+                }
+            }
+            if(nv.email!=null)
+            {
+                isValid = kiemTraEmail(nv.email);
+                if(isValid)
+                {
+                    nhanVien[i].email = nv.email;
+                }
+            }
+            if(nv.password!=null)
+            {
+                isValid = kiemTraMatKhau(nv.password);
+                if(isValid)
+                {
+                    nhanVien[i].password = nv.password;
+                }
+            }
+            if(nv.luongCB!=null)
+            {
+                isValid = kiemTraLuongCB(nv.luongCB);
+                if(isValid)
+                {
+                    nhanVien[i].luongCB = nv.luongCB;
+                }
+            }
+            if(nv.datepicker!=null)
+            {
+                isValid = kiemTraNgay(nv.datepicker);
+                if(isValid)
+                {
+                    nhanVien[i].datepicker = nv.datepicker;
+                }
+            }
+            if(nv.chucvu!=null)
+            {
+                isValid = kiemTraChucVu(nv.chucvu);
+                if(isValid)
+                {
+                    nhanVien[i].chucvu = nv.chucvu;
+                }
+            }
+            if(nv.giolam!=null)
+            {
+                isValid = kiemTraGioLam(nv.giolam);
+                if(isValid)
+                {
+                    nhanVien[i].giolam = nv.giolam;
+                }
+            }
+            if(nv.datepicker!=null)
+            {
+                nhanVien[i].datepicker = nv.datepicker;
+            }
             check = 1;
-            alert('Cập nhật thành công');
             break;
         }
     }
@@ -61,3 +121,9 @@ function capnhatNhanVien()
     renderToTable(nhanVien);
     }
 }
+
+// function searchNV()
+// {
+    
+//     timLoaiNhanVien()
+// }
